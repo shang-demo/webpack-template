@@ -32,3 +32,4 @@ deploy/**
 node_modules/
 .idea
 dist/
+.vscode/

@@ -1,0 +1,17 @@
+{
+  "dev": {
+    "url": "git@github.com:shang-demo/webpack-template.git",
+    "remote": "template",
+    "branch": "v1"
+  },
+  "prod": {
+    "url": "git@gitlab.com:demoshang/server-projects.git",
+    "remote": "prod",
+    "branch": "__package_name__"
+  },
+  "merge": {
+    "url": "https://github.com/shang-demo/webpack-template.git",
+    "remote": "template",
+    "branch": "v1"
+  }
+}

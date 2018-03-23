@@ -3,7 +3,7 @@ const HappyPack = require('happypack');
 const WebpackCdnPlugin = require('webpack-cdn-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ProvidePlugin = require('webpack/lib/ProvidePlugin');
-const webpackConstant = require('./constant');
+const webpackConstant = require('./constant')
 
 module.exports = {
   entry: {

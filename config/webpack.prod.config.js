@@ -2,8 +2,7 @@
 const path = require('path');
 const DefinePlugin = require('webpack/lib/DefinePlugin');
 const ModuleConcatenationPlugin = require('webpack/lib/optimize/ModuleConcatenationPlugin');
-const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HappyPack = require('happypack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackCdnPlugin = require('webpack-cdn-plugin');
@@ -18,7 +17,7 @@ const config = {
   },
   output: {
     filename: '[name]_[chunkhash:8].js', // 给输出的文件名称加上 Hash 值
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, '../dist'),
     publicPath: localPreview ? webpackConstant.publicPath.dev : webpackConstant.publicPath.prod,
     libraryTarget: 'window',
     // library: 'none'
@@ -44,10 +43,7 @@ const config = {
       },
       {
         test: /\.css$/,
-        // 提取出 Chunk 中的 CSS 代码到单独的文件中
-        use: ExtractTextPlugin.extract({
-          use: ['happypack/loader?id=css'],
-        }),
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
     ],
   },
@@ -72,33 +68,15 @@ const config = {
       // 通过 minimize 选项压缩 CSS 代码
       loaders: ['css-loader?minimize'],
     }),
-    new ExtractTextPlugin({
-      filename: '[name]_[contenthash:8].css', // 给输出的 CSS 文件名称加上 hash 值
+    new MiniCssExtractPlugin({
+      // Options similar to the same options in webpackOptions.output
+      // both options are optional
+      filename: '[name].css',
+      chunkFilename: '[id].css',
     }),
     new HtmlWebpackPlugin({
       template: 'src/index.html',
       title: webpackConstant.title.prod,
-    }),
-    new ParallelUglifyPlugin({
-      sourceMap: true,
-      // 传递给 UglifyJS 的参数
-      uglifyJS: {
-        output: {
-          // 最紧凑的输出
-          beautify: false,
-          // 删除所有的注释
-          comments: false,
-        },
-        compress: {
-          // 在UglifyJs删除没有用到的代码时不输出警告
-          warnings: false,
-          drop_console: false,
-          // 内嵌定义了但是只用到一次的变量
-          collapse_vars: true,
-          // 提取出出现多次但是没有定义成变量去引用的静态值
-          reduce_vars: true,
-        },
-      },
     }),
     new WebpackCdnPlugin(webpackConstant.cdn.prod),
   ],
