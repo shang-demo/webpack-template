@@ -5,7 +5,7 @@ source util.sh
 function baseBuild() {
   local nodeEnv=${1:-local}
 
-  rm -rf dist
+  rm -rf ${buildDir}
   NODE_ENV=${nodeEnv} webpack --config config/webpack.prod.config.js --mode production
   
   _generateLog
