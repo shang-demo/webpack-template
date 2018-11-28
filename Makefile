@@ -2,7 +2,7 @@
 prodNodeEnv:=$(shell cat Makefile.rsync.env.private 2>&1)
 
 start:
-	webpack-dev-server --config config/webpack.config.js --mode development
+	./node_modules/.bin/webpack-dev-server --config config/webpack.config.js --mode development
 local:
 	NODE_ENV=local npm run build && cd dist && hs
 build:

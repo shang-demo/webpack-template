@@ -25,6 +25,7 @@ const config = {
   resolve: {
     // 针对 Npm 中的第三方模块优先采用 jsnext:main 中指向的 ES6 模块化语法的文件
     mainFields: ['jsnext:main', 'browser', 'main'],
+    extensions: ['.tsx', '.ts', '.js'],
   },
   devtool: localPreview ? 'cheap-module-eval-source-map' : 'cheap-module-source-map',
   module: {
@@ -44,6 +45,11 @@ const config = {
       {
         test: /\.css$/,
         use: [MiniCssExtractPlugin.loader, 'css-loader'],
+      },
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/
       },
     ],
   },

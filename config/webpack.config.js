@@ -3,11 +3,11 @@ const HappyPack = require('happypack');
 const WebpackCdnPlugin = require('webpack-cdn-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ProvidePlugin = require('webpack/lib/ProvidePlugin');
-const webpackConstant = require('./constant')
+const webpackConstant = require('./constant');
 
 module.exports = {
   entry: {
-    index: './src/index.js',
+    index: './src/index.ts',
   },
   output: {
     filename: '[name]_[hash:8].js', // 给输出的文件名称加上 Hash 值
@@ -28,7 +28,15 @@ module.exports = {
         test: /\.css$/,
         use: ['happypack/loader?id=css'],
       },
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
     ],
+  },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js'],
   },
   plugins: [
     new ProvidePlugin(webpackConstant.provider),
